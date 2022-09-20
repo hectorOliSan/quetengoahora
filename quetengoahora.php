@@ -4,8 +4,11 @@
     <title>Horario DAW</title>
 
     <style type="text/css">
-      body {
+      * {
         font-family: consolas;
+      }
+
+      body {
         text-align: center;
       }
 
@@ -115,9 +118,9 @@
       echo "<h2 style='text-align: center;'>Horario DAW</h2>";
 
       echo "<table>";
-      echo "<th style='background-color: lightblue;'>-------------</th>";
+      echo "<th style='background-color: LightSlateGray;'>-------------</th>";
       foreach ($horario['08:00 - 08:55'] as $dia => $materia) {
-        echo "<th style='background-color: lightblue;'>$dia</th>";
+        echo "<th style='background-color: LightSlateGray;'>$dia</th>";
       }
 
       foreach ($horario as $hora => $dia) {
@@ -135,7 +138,7 @@
       echo "<table>";
       foreach ($codigo as $materia =>$valor) {
         echo "<tr>";
-        echo "<th style='background-color: lightblue;'>{$materia}</th>";
+        echo "<th style='background-color: Moccasin;'>{$materia}</th>";
         echo "<td>{$valor['materia']}</td>";
         echo "<td>{$valor['docente']}</td>";
         echo "<td>{$valor['aula']}</td>";
@@ -172,17 +175,22 @@
       <input type="submit" value="Buscar">
     </form>
 
-    <?php 
+    <?php
+      setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+      date_default_timezone_set('Europe/London');
+      echo "<br>";
+      echo "Hoy es: " . ucfirst(strftime("%A")) . " - " . date('H:i');
+      
       if(count($_POST)) {
         
-        echo "<h4 style='margin-left:auto; margin-right:auto; width:30%; background-color: lightblue;'>> {$_POST['dia']} - {$_POST['hora']}</h4>";
+        echo "<h4 style='margin-left:auto; margin-right:auto; width:30%;'><span style='background-color: LightSlateGray;'>> {$_POST['dia']} - {$_POST['hora']} </span></h4>";
 
         if($_POST['hora'] != "10:45 - 11:15") {
           foreach ($horario[$_POST['hora']] as $hora => $dia) {
             if($hora == $_POST['dia']) {
               echo "<table>";
               echo "<tr>";
-              echo "<th style='background-color: lightblue;'>$dia</th>";
+              echo "<th style='background-color: Moccasin;'>$dia</th>";
 
               echo "<td>";
                 print_r($codigo[$dia]['materia']);
