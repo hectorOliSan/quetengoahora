@@ -35,9 +35,17 @@
       th, td {
         padding: 3px;
       }
+
+      footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: LightSlateGray;
+      }
     </style>
     <script language="JavaScript">
-      function updateReloj(){
+      function updateReloj() {
         hora = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1")
         document.form_reloj.reloj.value = hora
 
@@ -47,9 +55,11 @@
   </head>
   <body onload="updateReloj()">
     <?php
+      //Configuración
       setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
       date_default_timezone_set('Europe/London');
     ?>
+
     <?php
       //Arrays
       $horario = array(
@@ -184,32 +194,61 @@
         echo "</table><br>";
       }
 
+      function mostrarTabla($dia) {
+        global $codigo;
+
+        echo "<table>";
+        echo "<tr>";
+        echo "<th style='background-color: Moccasin;'>$dia</th>";
+
+        echo "<td>";
+          print_r($codigo[$dia]['materia']);
+        echo "</td>";
+
+        echo "<td>";
+          print_r($codigo[$dia]['docente']);
+        echo "</td>";
+
+        echo "<td>";
+          print_r($codigo[$dia]['aula']);
+        echo "</td>";
+
+        echo "</tr>";
+        echo "</table>";
+        echo "<br>";
+      }
+
       function queTocaAhora($diaActual, $horaActual) {
         global $horario,$codigo;
 
         foreach ($horario as $hora => $dia) {
           if(strtotime(substr_replace($hora, '', 0, 8)) >= strtotime($horaActual)) {echo "<table>";
-            echo "<table>";
-            echo "<tr>";
-            echo "<th style='background-color: Moccasin;'>$dia[$diaActual]</th>";
-
-            echo "<td>";
-              print_r($codigo[$dia[$diaActual]]['materia']);
-            echo "</td>";
-
-            echo "<td>";
-              print_r($codigo[$dia[$diaActual]]['docente']);
-            echo "</td>";
-
-            echo "<td>";
-              print_r($codigo[$dia[$diaActual]]['aula']);
-            echo "</td>";
-
-            echo" </tr>";
-            echo "</table>";
-            echo "<br>";
+            mostrarTabla($dia[$diaActual]);
             return;
           }
+
+          echo "<table><tr><td><span style='color: #FFFFFF00'>.</span></td></tr></table>";
+          echo "<br>";
+
+          echo "<h3 style='text-align: center;'>Pero la siguiente clase es:</h3>";
+
+          $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime("tomorrow"))));
+          if($diaActual=="Viernes") {
+            $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime('+3 day', strtotime('now')))));
+            echo "<p>" . $diaSig  . ", 08:00 - 08:55</p>";
+          } elseif ($diaActual=="Sábado") {
+            $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime('+2 day', strtotime('now')))));
+            echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
+          } else {
+            echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
+          }
+
+          foreach ($horario["08:00 - 08:55"] as $hora => $dia) {
+            if($hora == $diaSig) {
+              mostrarTabla($dia);
+            }
+          }
+          return;
         }
       }
 
@@ -223,24 +262,7 @@
           if($_POST['hora'] != "10:45 - 11:15") {
             foreach ($horario[$_POST['hora']] as $hora => $dia) {
               if($hora == $_POST['dia']) {
-                echo "<table>";
-                echo "<tr>";
-                echo "<th style='background-color: Moccasin;'>$dia</th>";
-
-                echo "<td>";
-                  print_r($codigo[$dia]['materia']);
-                echo "</td>";
-
-                echo "<td>";
-                  print_r($codigo[$dia]['docente']);
-                echo "</td>";
-
-                echo "<td>";
-                  print_r($codigo[$dia]['aula']);
-                echo "</td>";
-
-                echo" </tr>";
-                echo "</table>";
+                mostrarTabla($dia);
               }
             }
             return;
@@ -252,24 +274,31 @@
     ?>
 
     <?php getDiaHora(); ?>
+
     <br>
+
     <h2 style="text-align: center;">Ahora toca:</h2>
+
     <?php
       queTocaAhora(ucfirst(utf8_encode(strftime("%A"))), date("H:i"));
     ?>
 
-    <hr>
+    <button onclick="window.modal.showModal();">Consulta el horario</button>
+    <dialog style="min-width: 50%;" id="modal">
 
-    <div style="float: left; width: 50%;">
-      <div style="text-align: center">
+      <div">
         <?php
           mostrarHorario();
           mostrarAsignaturas();
         ?>
       </div>
-    </div>
 
-    <div style="float: right; width: 50%;">
+      <button onclick="window.modal.close();">Cerrar</button>
+    </dialog>
+
+    <br><br><hr>
+
+    <main>
       <h2 style="text-align: center;">Buscar:</h2>
 
       <form action="quetengoahora.php" method="POST">
@@ -285,7 +314,7 @@
         <label for="Hora">Hora:</label>
         <select id="Hora" name="hora">
           <option value="08:00 - 08:55">08:00 - 08:55</option>
-        <option value="08:55 - 09:50">08:55 - 09:50</option>
+          <option value="08:55 - 09:50">08:55 - 09:50</option>
           <option value="09:50 - 10:45">09:50 - 10:45</option>
           <option value="10:45 - 11:15">10:45 - 11:15</option>
           <option value="11:15 - 12:10">11:15 - 12:10</option>
@@ -296,7 +325,13 @@
         <input type="submit" value="Buscar">
       </form>
 
+      <br>
+
       <?php queToca(); ?>
-    </div>
+    </main>
+
+    <footer>
+      <p>Héctor Olivares Sánchez - DSW 2022</p>
+    </footer>
   </body>
 </html>
