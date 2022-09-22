@@ -265,17 +265,16 @@
       function queTocaAhora($diaActual, $horaActual) {
         global $horario;
 
-        $hayClase = false;
         foreach ($horario as $hora => $dia) {
-          if (strtotime($horaActual) < strtotime("08:00")) break;
+          if($diaActual == "Sábado" || $diaActual == "Domingo") break;
+          if(strtotime($horaActual) < strtotime("08:00")) break;
           if(strtotime(substr_replace($hora, '', 0, 6)) >= strtotime($horaActual)) {
-            $hayClase = true;
             mostrarTabla($dia[$diaActual]);
-            break;
+            return;
           }
         }
 
-        if(!$hayClase) diaSiguiente($diaActual, $horaActual);
+        diaSiguiente($diaActual, $horaActual);
       }
 
       function queToca() {
