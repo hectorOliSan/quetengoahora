@@ -63,7 +63,7 @@
     <?php
       //Arrays
       $horario = array(
-        "08:00 - 08:55" => array(
+        "08:00-08:55" => array(
           "Lunes" => "EMR",
           "Martes" => "DPL",
           "Miércoles" => "DEW",
@@ -72,7 +72,7 @@
         ),
 
 
-        "08:55 - 09:50" => array(
+        "08:55-09:50" => array(
           "Lunes" => "DSW",
           "Martes" => "DPL",
           "Miércoles" => "DEW",
@@ -80,7 +80,7 @@
           "Viernes" => "DOR"
         ),
 
-        "09:50 - 10:45" => array(
+        "09:50-10:45" => array(
           "Lunes" => "DSW",
           "Martes" => "DSW",
           "Miércoles" => "DSW",
@@ -88,7 +88,7 @@
           "Viernes" => "DPL"
         ),
 
-        "10:45 - 11:15" => array(
+        "10:45-11:15" => array(
           "Lunes" => "",
           "Martes" => "",
           "Miércoles" => "",
@@ -96,7 +96,7 @@
           "Viernes" => ""
         ),
 
-        "11:15 - 12:10" => array(
+        "11:15-12:10" => array(
           "Lunes" => "DEW",
           "Martes" => "DSW",
           "Miércoles" => "DSW",
@@ -104,7 +104,7 @@
           "Viernes" => "EMR"
         ),
 
-        "12:10 - 13:05" => array(
+        "12:10-13:05" => array(
           "Lunes" => "DEW",
           "Martes" => "DOR",
           "Miércoles" => "DOR",
@@ -112,7 +112,7 @@
           "Viernes" => "DSW"
         ),
 
-        "13:05 - 14:00" => array(
+        "13:05-14:00" => array(
           "Lunes" => "DEW",
           "Martes" => "DOR",
           "Miércoles" => "DOR",
@@ -163,7 +163,7 @@
 
         echo "<table>";
         echo "<th style='background-color: LightSlateGray;'>-------------</th>";
-        foreach ($horario['08:00 - 08:55'] as $dia => $materia) {
+        foreach ($horario['08:00-08:55'] as $dia => $materia) {
           echo "<th style='background-color: LightSlateGray;'>$dia</th>";
         }
 
@@ -197,6 +197,12 @@
       function mostrarTabla($dia) {
         global $codigo;
 
+        if($dia == "") {
+          echo "<table><tr><td>Descanso / Recreo</td></tr></table>";
+          echo "<br>";
+          return;
+        }
+
         echo "<table>";
         echo "<tr>";
         echo "<th style='background-color: Moccasin;'>$dia</th>";
@@ -218,21 +224,18 @@
         echo "<br>";
       }
 
-      function queTocaAhora($diaActual, $horaActual) {
-        global $horario,$codigo;
+      function diaSiguiente($diaActual, $horaActual) {
+        global $horario;
 
-        foreach ($horario as $hora => $dia) {
-          if(strtotime(substr_replace($hora, '', 0, 8)) >= strtotime($horaActual)) {echo "<table>";
-            mostrarTabla($dia[$diaActual]);
-            return;
-          }
+        echo "<table><tr><td><span style='color: #FFFFFF00'>.</span></td></tr></table>";
+        echo "<br>";
 
-          echo "<table><tr><td><span style='color: #FFFFFF00'>.</span></td></tr></table>";
-          echo "<br>";
+        echo "<h3 style='text-align: center;'>Pero la siguiente clase es:</h3>";
 
-          echo "<h3 style='text-align: center;'>Pero la siguiente clase es:</h3>";
-
-          $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime("tomorrow"))));
+        $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime("tomorrow"))));
+        if (strtotime($horaActual) < strtotime("08:00")) {
+          echo "<p>" . $diaActual  . ", 08:00 - 08:55</p>";
+        } else {
           if($diaActual=="Viernes") {
             $diaSig = ucfirst(utf8_encode(strftime("%A", strtotime('+3 day', strtotime('now')))));
             echo "<p>" . $diaSig  . ", 08:00 - 08:55</p>";
@@ -242,14 +245,37 @@
           } else {
             echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
           }
+        }
 
-          foreach ($horario["08:00 - 08:55"] as $hora => $dia) {
-            if($hora == $diaSig) {
+        foreach ($horario["08:00-08:55"] as $hora => $dia) {
+          if (strtotime($horaActual) < strtotime("08:00")) {
+            if($hora == $diaActual) {
               mostrarTabla($dia);
+              return;
             }
           }
-          return;
+
+          if($hora == $diaSig) {
+            mostrarTabla($dia);
+            return;
+          }
         }
+      }
+
+      function queTocaAhora($diaActual, $horaActual) {
+        global $horario;
+
+        $hayClase = false;
+        foreach ($horario as $hora => $dia) {
+          if (strtotime($horaActual) < strtotime("08:00")) break;
+          if(strtotime(substr_replace($hora, '', 0, 6)) >= strtotime($horaActual)) {
+            $hayClase = true;
+            mostrarTabla($dia[$diaActual]);
+            break;
+          }
+        }
+
+        if(!$hayClase) diaSiguiente($diaActual, $horaActual);
       }
 
       function queToca() {
@@ -257,15 +283,19 @@
 
         if(count($_POST)) {
 
-          echo "<h4 style='margin-left:auto; margin-right:auto; width:30%;'><span style='background-color: LightSlateGray;'>> {$_POST['dia']} - {$_POST['hora']} </span></h4>";
+          echo "<h4 style='margin-left:auto; margin-right:auto;'>";
+          echo "<span style='padding: 3px; background-color: LightSlateGray;'>";
+          echo $_POST['dia'].", ".substr($_POST['hora'], "0", "5")." - ".substr($_POST['hora'], "6");
+          echo "</span>";
+          echo "</h4>";
 
-          if($_POST['hora'] != "10:45 - 11:15") {
+          if($_POST['hora'] != "10:45-11:15") {
             foreach ($horario[$_POST['hora']] as $hora => $dia) {
               if($hora == $_POST['dia']) {
                 mostrarTabla($dia);
+                return;
               }
             }
-            return;
           }
 
           echo "<table><tr><td>Descanso / Recreo</td></tr></table>";
@@ -313,13 +343,13 @@
 
         <label for="Hora">Hora:</label>
         <select id="Hora" name="hora">
-          <option value="08:00 - 08:55">08:00 - 08:55</option>
-          <option value="08:55 - 09:50">08:55 - 09:50</option>
-          <option value="09:50 - 10:45">09:50 - 10:45</option>
-          <option value="10:45 - 11:15">10:45 - 11:15</option>
-          <option value="11:15 - 12:10">11:15 - 12:10</option>
-          <option value="12:10 - 13:05">12:10 - 13:05</option>
-          <option value="13:05 - 14:00">13:05 - 14:00</option>
+          <option value="08:00-08:55">08:00 - 08:55</option>
+          <option value="08:55-09:50">08:55 - 09:50</option>
+          <option value="09:50-10:45">09:50 - 10:45</option>
+          <option value="10:45-11:15">10:45 - 11:15</option>
+          <option value="11:15-12:10">11:15 - 12:10</option>
+          <option value="12:10-13:05">12:10 - 13:05</option>
+          <option value="13:05-14:00">13:05 - 14:00</option>
         </select>
 
         <input type="submit" value="Buscar">
