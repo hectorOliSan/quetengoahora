@@ -1,5 +1,15 @@
 # quetengoahora
 
+## A1.3 - Selección de horario de grupos/docentes
+Modifica la aplicación "¿Qué tengo ahora?" para que se visualice un desplegable que permita escoger entre un listado de grupos y docentes.
+
+Utiliza la etiqueta "optgroup" para separar a los docentes de los grupos: 
+- (https://www.w3schools.com/tags/tag_optgroup.asp)
+
+La aplicación mostrará la información relativa al horario que el usuario seleccione en este desplegable.
+
+<hr>
+
 ## A1.2 - ¿Qué tengo ahora Trabajando con arrays y funciones
 
 Realiza las siguientes tareas
