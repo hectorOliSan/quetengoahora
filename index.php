@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario DAW</title>
+    <title>¿Qué tengo ahora?</title>
     <style type="text/css">
       * {
         font-family: consolas;
@@ -22,11 +22,11 @@
       table {
         margin: auto;
         min-width: 70%;
-        font-size: calc(1vh + 0.3vw);
+        font-size: 1rem;
       }
 
       table, th, td {
-        padding: 3px;
+        padding: 5px;
         border: 2px solid;
         border-collapse: collapse;
       }
@@ -39,7 +39,7 @@
         background: LightSlateGray;
       }
     </style>
-    <script language="JavaScript">
+    <script>
       function updateReloj() {
         hora =
           new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1")
@@ -55,27 +55,32 @@
       date_default_timezone_set('Atlantic/Canary');
 
       //Arrays
-      $horario = simplexml_load_file("horario.xml");
-      $asignaturas = simplexml_load_file("asignaturas.xml");
+      if(count($_POST)) {
+        $horario = simplexml_load_file($_POST['horario'].".xml");
+        $asignaturas = simplexml_load_file("asignaturas_".$_POST['horario'].".xml");
+
+      } else {
+        $horario = simplexml_load_file("2dawm.xml");
+        $asignaturas = simplexml_load_file("asignaturas_2dawm.xml");
+      }
     ?>
 
     <?php
       //Funciones
-      function getDia() {
-        $dias = array(
+      $diasSemana = array(
           "Domingo", "Lunes", "Martes",
           "Miércoles", "Jueves", "Viernes", "Sábado");
-        return $dias[strftime("%w")];
+
+      function getDia() {
+        global $diasSemana;
+        return $diasSemana[strftime("%w")];
       }
 
       function getDiaSig($num) {
-        $dias = array(
-          "Domingo", "Lunes", "Martes",
-          "Miércoles", "Jueves", "Viernes", "Sábado");
-
+        global $diasSemana;
         $sig = strftime("%w") + $num;
         if($sig > 7) $sig-=7;
-        return $dias[$sig];
+        return $diasSemana[$sig];
       }
 
       function getDiaHora() {
@@ -91,7 +96,7 @@
       function mostrarHorario() {
         global $horario;
 
-        echo "<h3 style='text-align: center;'>Horario DAW</h3>";
+        echo "<h3 style='text-align: center;'>Horario</h3>";
 
         echo "<table>";
         echo "<th style='background-color: LightSlateGray;'>-------------</th>";
@@ -221,7 +226,7 @@
       function queToca() {
         global $horario;
 
-        if(count($_POST)) {
+        if(count($_POST)>1) {
 
           echo "<h4 style='margin-left:auto; margin-right:auto;'>";
           echo "<span style='padding: 3px; background-color: LightSlateGray;'>";
@@ -245,7 +250,17 @@
 
     <?php getDiaHora(); ?>
 
-    <br>
+    <br><br>
+
+    <form action="" method="POST">
+      <label for="Horario">Horario:</label>
+      <select id="Horario" name="horario">
+        <option value="2dawm" selected>2º DAW M</option>
+        <option value="2damm">2º DAM M</option>
+      </select>
+
+      <input type="submit" value="Enviar">
+    </form>
 
     <h2 style="text-align: center;">Ahora toca:</h2>
 
@@ -290,6 +305,13 @@
           <option value="13:05 - 14:00">13:05 - 14:00</option>
         </select>
 
+        <?php
+          if(count($_POST)) {
+            echo "<input type='hidden' name='horario' value='".$_POST['horario']."'>";
+          } else {
+            echo "<input type='hidden' name='horario' value='2dawm'>";
+          }
+        ?>
         <input type="submit" value="Buscar">
       </form>
 
