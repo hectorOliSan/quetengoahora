@@ -255,8 +255,14 @@
     <form action="" method="POST">
       <label for="Horario">Horario:</label>
       <select id="Horario" name="horario">
-        <option value="2dawm" selected>2º DAW M</option>
-        <option value="2damm">2º DAM M</option>
+        <optgroup label="Listado de Grupos">
+          <option value="2dawm" selected>2º DAW M</option>
+          <option value="2damm">2º DAM M</option>
+        </optgroup>
+        <optgroup label="Docentes">
+          <option value="" disabled>Sergio Ramos Suárez</option>
+          <option value="" disabled>María del Carmen Rodríguez Suárez</option>
+        </optgroup>
       </select>
 
       <input type="submit" value="Enviar">
