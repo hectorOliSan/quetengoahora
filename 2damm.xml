@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<horario>
+  <primera id="08:00 - 08:55">
+    <Lunes>AED</Lunes>
+    <Martes>DAD</Martes>
+    <Miércoles>AED</Miércoles>
+    <Jueves>SSG</Jueves>
+    <Viernes>PGL</Viernes>
+  </primera>
+
+  <segunda id="08:55 - 09:50">
+    <Lunes>AED</Lunes>
+    <Martes>DAD</Martes>
+    <Miércoles>AED</Miércoles>
+    <Jueves>SSG</Jueves>
+    <Viernes>PGL</Viernes>
+  </segunda>
+
+  <tercera id="09:50 - 10:45">
+    <Lunes>AED</Lunes>
+    <Martes>PGL</Martes>
+    <Miércoles>EMR</Miércoles>
+    <Jueves>SSG</Jueves>
+    <Viernes>PGV</Viernes>
+  </tercera>
+
+  <cuarta id="10:45 - 11:15">
+    <Lunes/>
+    <Martes/>
+    <Miércoles/>
+    <Jueves/>
+    <Viernes/>
+  </cuarta>
+
+  <quinta id="11:15 - 12:10">
+    <Lunes>EMR</Lunes>
+    <Martes>PGL</Martes>
+    <Miércoles>EMR</Miércoles>
+    <Jueves>EMR</Jueves>
+    <Viernes>PGV</Viernes>
+  </quinta>
+
+  <sexta id="12:10 - 13:05">
+    <Lunes>SSG</Lunes>
+    <Martes>AED</Martes>
+    <Miércoles>PGV</Miércoles>
+    <Jueves>DAD</Jueves>
+    <Viernes>DAD</Viernes>
+  </sexta>
+
+  <septima id="13:05 - 14:00">
+    <Lunes>SSG</Lunes>
+    <Martes>AED</Martes>
+    <Miércoles>PGV</Miércoles>
+    <Jueves>DAD</Jueves>
+    <Viernes>DAD</Viernes>
+  </septima>
+</horario>
