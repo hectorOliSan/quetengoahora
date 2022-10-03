@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<codigo>
+  <EMR>
+    <materia>Empresa e iniciativa emprendedora</materia>
+    <docente>MARIA DEL SOL GARCIA TARAJANO</docente>
+    <aula>201</aula>
+  </EMR>
+
+  <DSW>
+    <materia>Desarrollo web en entorno servidor</materia>
+    <docente>SERGIO RAMOS SUAREZ</docente>
+    <aula>201</aula>
+  </DSW>
+
+  <DEW>
+    <materia>Desarrollo web en entorno cliente</materia>
+    <docente>MARIA DEL CARMEN RODRIGUEZ SUAREZ</docente>
+    <aula>201</aula>
+  </DEW>
+
+  <DPL>
+    <materia>Despliegue de aplicaciones web</materia>
+    <docente>MARIA ANTONIA MONTESDEOCA VIERA</docente>
+    <aula>201</aula>
+  </DPL>
+
+  <DOR>
+    <materia>Diseño de interfaces web</materia>
+    <docente>ERMIS PAPAKONSTANTINOU BAEZ</docente>
+    <aula>201</aula>
+  </DOR>
+</codigo>
