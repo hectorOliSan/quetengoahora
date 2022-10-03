@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<codigo>
+  <AED>
+    <materia>Acceso a datos</materia>
+    <docente>JOSE IGNACIO ZABALLOS</docente>
+    <aula>103</aula>
+  </AED>
+
+  <DAD>
+    <materia>Desarrollo de interfaces</materia>
+    <docente>ERMIS PAPAKONSTANTINOU BAEZ</docente>
+    <aula>103</aula>
+  </DAD>
+
+  <EMR>
+    <materia>Empresa e iniciativa emprendedora</materia>
+    <docente>MARIA DEL SOL GARCIA TARAJANO</docente>
+    <aula>103</aula>
+  </EMR>
+
+  <PGL>
+    <materia>Programación multimedia y dispositivos móviles</materia>
+    <docente>MIGUEL ANGEL HERNANDEZ RODRIGUEZ</docente>
+    <aula>103</aula>
+  </PGL>
+
+  <PGV>
+    <materia>Programación de servicios y procesos</materia>
+    <docente>SERGIO RAMOS SUAREZ</docente>
+    <aula>103</aula>
+  </PGV>
+
+  <SSG>
+    <materia>Sistemas de gestión empresarial</materia>
+    <docente>ERMIS PAPAKONSTANTINOU BAEZ</docente>
+    <aula>103</aula>
+  </SSG>
+</codigo>
