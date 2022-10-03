@@ -260,7 +260,7 @@
           <option value="2damm">2º DAM M</option>
         </optgroup>
         <optgroup label="Docentes">
-          <option value="" disabled>Sergio Ramos Suárez</option>
+          <option value="sergioRamos">Sergio Ramos Suárez</option>
           <option value="" disabled>María del Carmen Rodríguez Suárez</option>
         </optgroup>
       </select>
