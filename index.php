@@ -56,12 +56,12 @@
 
       //Arrays
       if(count($_POST)) {
-        $horario = simplexml_load_file($_POST['horario'].".xml");
-        $asignaturas = simplexml_load_file("asignaturas_".$_POST['horario'].".xml");
+        $horario = simplexml_load_file(".\\horarios\\".$_POST['horario'].".xml");
+        $asignaturas = simplexml_load_file(".\\asignaturas\\"."asignaturas_".$_POST['horario'].".xml");
 
       } else {
-        $horario = simplexml_load_file("2dawm.xml");
-        $asignaturas = simplexml_load_file("asignaturas_2dawm.xml");
+        $horario = simplexml_load_file(".\\horarios\\2dawm.xml");
+        $asignaturas = simplexml_load_file(".\\asignaturas\\asignaturas_2dawm.xml");
       }
     ?>
 
