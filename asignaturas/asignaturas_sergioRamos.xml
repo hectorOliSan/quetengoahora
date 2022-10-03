@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<codigo>
+  <DSW>
+    <materia>Desarrollo web en entorno servidor</materia>
+    <docente>2º DAW M</docente>
+    <aula>201</aula>
+  </DSW>
+
+  <PGV>
+    <materia>Programación de servicios y procesos</materia>
+    <docente>2º DAM M</docente>
+    <aula>103</aula>
+  </PGV>
+</codigo>
