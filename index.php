@@ -63,6 +63,11 @@
         $horario = simplexml_load_file(".\\horarios\\2dawm.xml");
         $asignaturas = simplexml_load_file(".\\asignaturas\\asignaturas_2dawm.xml");
       }
+
+      $tarde = true;
+      if(array_values((array)$horario)[0]['id'] == "08:00 - 08:55") {
+        $tarde = false;
+      }
     ?>
 
     <?php
@@ -163,7 +168,7 @@
       }
 
       function diaSiguiente($diaActual, $horaActual) {
-        global $horario;
+        global $horario, $tarde;
 
         echo "<table><tr><td>---</td></tr></table>";
         echo "<br>";
@@ -171,26 +176,49 @@
         echo "<h3 style='text-align: center;'>Pero la siguiente clase es:</h3>";
 
         $diaSig = getDiaSig(1);
-        if (strtotime($horaActual) < strtotime("08:00")) {
-          echo "<p>" . $diaActual  . ", 08:00 - 08:55</p>";
-        } else {
-          if($diaActual=="Viernes") {
-            $diaSig = getDiaSig(3);
-            echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
-          } elseif ($diaActual=="Sábado") {
-            $diaSig = getDiaSig(2);
-            echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
+        if ($tarde) {
+          if (strtotime($horaActual) < strtotime("15:00")) {
+            echo "<p>" . $diaActual  . ", 15:00 - 15:55</p>";
           } else {
+            if($diaActual=="Viernes") {
+              $diaSig = getDiaSig(3);
+            } elseif ($diaActual=="Sábado") {
+              $diaSig = getDiaSig(2);
+            }
+            echo "<p>" . $diaSig . ", 15:00 - 15:55</p>";
+          }
+
+        } else {
+          if (strtotime($horaActual) < strtotime("08:00")) {
+            echo "<p>" . $diaActual  . ", 08:00 - 08:55</p>";
+          } else {
+            if($diaActual=="Viernes") {
+              $diaSig = getDiaSig(3);
+            } elseif ($diaActual=="Sábado") {
+              $diaSig = getDiaSig(2);
+            }
             echo "<p>" . $diaSig . ", 08:00 - 08:55</p>";
           }
         }
 
         foreach ($horario as $hora => $dia) {
-          if (strtotime($horaActual) < strtotime("08:00")) {
-            foreach ($dia as $dia => $materia) {
-              if($dia == $diaActual) {
-                mostrarTabla($materia);
-                return;
+          if ($tarde) {
+            if (strtotime($horaActual) < strtotime("15:00")) {
+              foreach ($dia as $dia => $materia) {
+                if($dia == $diaActual) {
+                  mostrarTabla($materia);
+                  return;
+                }
+              }
+            }
+
+          } else {
+            if (strtotime($horaActual) < strtotime("08:00")) {
+              foreach ($dia as $dia => $materia) {
+                if($dia == $diaActual) {
+                  mostrarTabla($materia);
+                  return;
+                }
               }
             }
           }
@@ -205,11 +233,17 @@
       }
 
       function queTocaAhora($diaActual, $horaActual) {
-        global $horario;
+        global $horario, $tarde;
 
         foreach ($horario as $hora => $dia) {
           if($diaActual == "Sábado" || $diaActual == "Domingo") break;
-          if(strtotime($horaActual) < strtotime("08:00")) break;
+
+          if($tarde) {
+            if(strtotime($horaActual) < strtotime("15:00")) break;
+          } else {
+            if(strtotime($horaActual) < strtotime("08:00")) break;
+          }
+
           if(strtotime(substr_replace($dia['id'], '', 0, 8)) >= strtotime($horaActual)) {
             foreach ($dia as $dia => $materia) {
               if($diaActual == $dia) {
@@ -258,6 +292,7 @@
         <optgroup label="Listado de Grupos">
           <option value="2dawm" selected>2º DAW M</option>
           <option value="2damm">2º DAM M</option>
+          <option value="ceiabdta">CE Inteligencia Artificial y Big Data TA</option>
         </optgroup>
         <optgroup label="Docentes">
           <option value="sergioRamos">Sergio Ramos Suárez</option>
@@ -302,13 +337,23 @@
 
         <label for="Hora">Hora:</label>
         <select id="Hora" name="hora">
-          <option value="08:00 - 08:55">08:00 - 08:55</option>
-          <option value="08:55 - 09:50">08:55 - 09:50</option>
-          <option value="09:50 - 10:45">09:50 - 10:45</option>
-          <option value="10:45 - 11:15">10:45 - 11:15</option>
-          <option value="11:15 - 12:10">11:15 - 12:10</option>
-          <option value="12:10 - 13:05">12:10 - 13:05</option>
-          <option value="13:05 - 14:00">13:05 - 14:00</option>
+        <?php
+          if($tarde) {
+            echo "<option value='15:00 - 15:55'>15:00 - 15:55</option>";
+            echo "<option value='15:55 - 16:50'>15:55 - 16:50</option>";
+            echo "<option value='16:50 - 17:45'>16:50 - 17:45</option>";
+            echo "<option value='17:45 - 18:00'>17:45 - 18:00</option>";
+            echo "<option value='18:00 - 18:55'>18:00 - 18:55</option>";
+          } else {
+            echo "<option value='08:00 - 08:55'>08:00 - 08:55</option>";
+            echo "<option value='08:55 - 09:50'>08:55 - 09:50</option>";
+            echo "<option value='09:50 - 10:45'>09:50 - 10:45</option>";
+            echo "<option value='10:45 - 11:15'>10:45 - 11:15</option>";
+            echo "<option value='11:15 - 12:10'>11:15 - 12:10</option>";
+            echo "<option value='12:10 - 13:05'>12:10 - 13:05</option>";
+            echo "<option value='13:05 - 14:00'>13:05 - 14:00</option>";
+          }
+        ?>
         </select>
 
         <?php
