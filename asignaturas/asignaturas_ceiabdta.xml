@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<codigo>
+  <PRO>
+    <materia>Programación de inteligencia artificial</materia>
+    <docente>CARLOS FERNANDEZ DE LA TORRE</docente>
+    <aula>IN1</aula>
+  </PRO>
+
+  <BIU>
+    <materia>Big Data aplicado</materia>
+    <docente>GUSTAVO MARTIN RAMIREZ</docente>
+    <aula>IN1</aula>
+  </BIU>
+
+  <MD>
+    <materia>Modelos de inteligencia artificial</materia>
+    <docente>CARLOS FERNANDEZ DE LA TORRE</docente>
+    <aula>IN1</aula>
+  </MD>
+
+  <SPS>
+    <materia>	Sistemas de Big Data</materia>
+    <docente>GUSTAVO MARTIN RAMIREZ</docente>
+    <aula>IN1</aula>
+  </SPS>
+
+  <SNS>
+    <materia>Sistemas de aprendizaje automático</materia>
+    <docente>SALVADOR BORDON RUANO</docente>
+    <aula>IN1</aula>
+  </SNS>
+</codigo>
