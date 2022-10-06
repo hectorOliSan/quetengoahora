@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<horario>
+  <primera id="15:00 - 15:55">
+    <Lunes>PRO</Lunes>
+    <Martes>PRO</Martes>
+    <Miércoles>SPS</Miércoles>
+    <Jueves>BIU</Jueves>
+    <Viernes>SNS</Viernes>
+  </primera>
+
+  <segunda id="15:55 - 16:50">
+    <Lunes>PRO</Lunes>
+    <Martes>PRO</Martes>
+    <Miércoles>SPS</Miércoles>
+    <Jueves>BIU</Jueves>
+    <Viernes>SNS</Viernes>
+  </segunda>
+
+  <tercera id="16:50 - 17:45">
+    <Lunes>BIU</Lunes>
+    <Martes>MD</Martes>
+    <Miércoles>PRO</Miércoles>
+    <Jueves>SNS</Jueves>
+    <Viernes>SPS</Viernes>
+  </tercera>
+
+  <cuarta id="17:45 - 18:00">
+    <Lunes/>
+    <Martes/>
+    <Miércoles/>
+    <Jueves/>
+    <Viernes/>
+  </cuarta>
+
+  <quinta id="18:00 - 18:55">
+    <Lunes>BIU</Lunes>
+    <Martes>MD</Martes>
+    <Miércoles>PRO</Miércoles>
+    <Jueves>PRO</Jueves>
+    <Viernes>BIU</Viernes>
+  </quinta>
+</horario>
